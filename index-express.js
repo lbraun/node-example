@@ -18,17 +18,18 @@ app.get('/catalog', function (req, res) {
   res.json(catalog);
 });
 
+// Read
 app.get('/catalog/:id', function (req, res, next) {
   var id = req.params.id;
   if (id in catalog) {
     res.json(catalog[id]);
   } else {
-    next("No product with id " + id + " found!");
     res.status(404);
-    res.send();
+    next("No product with id " + id + " found!");
   }
 });
 
+// Create
 app.post("/catalog", function(req, res, next) {
   var id = req.body.id;
 
@@ -43,19 +44,36 @@ app.post("/catalog", function(req, res, next) {
   }
 });
 
+// Update
 app.put("/catalog/:id", function(req, res, next) {
   var id = req.params.id;
 
   if (id in catalog) {
     catalog[id] = req.body;
     res.set("Location", `${uri_root}:${port}/`)
-    res.status(201);
+    res.status(200);
     res.send(req.body);
   } else {
-    res.status(400);
+    res.status(404);
     next("No product with id " + id + " found!");
   }
 });
+
+// Delete
+app.delete("/catalog/:id", function(req, res, next) {
+  var id = req.params.id;
+
+  if (id in catalog) {
+    deleted_product = catalog[id];
+    delete catalog[id];
+    res.set("Location", `${uri_root}:${port}/`)
+    res.status(200);
+    res.send(deleted_product);
+  } else {
+    res.status(404);
+    next("No product with id " + id + " found!");
+  }
+})
 
 
 var server = app.listen(port, function () {
