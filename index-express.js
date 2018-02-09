@@ -12,10 +12,6 @@ var catalog = new Object();
 catalog[0] = {id:0, name: "USB drive 16 GB", price: 10}
 catalog[1] = {id:1, name: "USB drive 32 GB", price: 18}
 
-app.get('/', function (req, res) {
-  res.send("Hello and welcome!");
-});
-
 app.get('/catalog', function (req, res) {
   res.json(catalog);
 });
