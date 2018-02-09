@@ -6,6 +6,8 @@ var port = 3000;
 var bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
+app.use(express.static(__dirname + '/public'));
+
 var catalog = new Object();
 catalog[0] = {id:0, name: "USB drive 16 GB", price: 10}
 catalog[1] = {id:1, name: "USB drive 32 GB", price: 18}
