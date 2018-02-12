@@ -17,12 +17,13 @@ app.controller("IndexController", ["$scope", "$http", function($scope, $http) {
     // body...
   };
 
-  $scope.delete_product = function (product_id) {
+  $scope.delete_product = function (product_id, product_index) {
     $http({
       method: 'DELETE',
       url: API_URL + '/api/catalog/' + product_id
     }).then(function successCallback(response) {
       // Handle success
+      $scope.catalog.splice(product_index, 1);
     }, function errorCallback(response) {
       // Handle error
     });

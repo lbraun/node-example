@@ -37,7 +37,7 @@
                   <td>{{product.price}}</td>
                   <td>
                     <button class="btn btn-info" ng-click="edit_product(product.id)">Edit</button>
-                    <button class="btn btn-danger" ng-click="delete_product(product.id)">Delete</button>
+                    <button class="btn btn-danger" ng-click="delete_product(product.id, $index)">Delete</button>
                   </td>
                 </tr>
               </tbody>
