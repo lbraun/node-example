@@ -9,9 +9,7 @@ app.use(bodyParser.json());
 // app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/angular_app'));
 
-var catalog = new Object();
-catalog[0] = {id:0, name: "USB drive 16 GB", price: 10}
-catalog[1] = {id:1, name: "USB drive 32 GB", price: 18}
+var Product = require("./model/product");
 
 app.get('/api/catalog', function (req, res) {
   res.json(catalog);
@@ -19,13 +17,20 @@ app.get('/api/catalog', function (req, res) {
 
 // Read
 app.get('/api/catalog/:id', function (req, res, next) {
-  var id = req.params.id;
-  if (id in catalog) {
-    res.json(catalog[id]);
-  } else {
-    res.status(404);
-    next("No product with id " + id + " found!");
-  }
+  var productId = req.params.id;
+
+  Product.findOne({id: productId}, function(err, product) {
+    if(err) {
+      res.status(500);
+      next("Internal server error.");
+    } else if(product == null) {
+      res.status(404); // Not found
+      next("No product with id " + productId + " found.");
+    } else {
+      res.status(200);
+      res.json(product);
+    }
+  });
 });
 
 // Create
