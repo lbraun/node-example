@@ -6,18 +6,19 @@ var port = 3000;
 var bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
-app.use(express.static(__dirname + '/public'));
+// app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/angular_app'));
 
 var catalog = new Object();
 catalog[0] = {id:0, name: "USB drive 16 GB", price: 10}
 catalog[1] = {id:1, name: "USB drive 32 GB", price: 18}
 
-app.get('/catalog', function (req, res) {
+app.get('/api/catalog', function (req, res) {
   res.json(catalog);
 });
 
 // Read
-app.get('/catalog/:id', function (req, res, next) {
+app.get('/api/catalog/:id', function (req, res, next) {
   var id = req.params.id;
   if (id in catalog) {
     res.json(catalog[id]);
@@ -28,7 +29,7 @@ app.get('/catalog/:id', function (req, res, next) {
 });
 
 // Create
-app.post("/catalog", function(req, res, next) {
+app.post("/api/catalog", function(req, res, next) {
   var id = req.body.id;
 
   if (id in catalog) {
@@ -43,7 +44,7 @@ app.post("/catalog", function(req, res, next) {
 });
 
 // Update
-app.put("/catalog/:id", function(req, res, next) {
+app.put("/api/catalog/:id", function(req, res, next) {
   var id = req.params.id;
 
   if (id in catalog) {
@@ -58,7 +59,7 @@ app.put("/catalog/:id", function(req, res, next) {
 });
 
 // Delete
-app.delete("/catalog/:id", function(req, res, next) {
+app.delete("/api/catalog/:id", function(req, res, next) {
   var id = req.params.id;
 
   if (id in catalog) {

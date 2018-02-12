@@ -1,0 +1,19 @@
+{
+  "name": "node-example-angular",
+  "version": "0.0.1",
+  "description": "Exploration of node-angular integration",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "angular"
+  ],
+  "author": "Lucas Braun",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.6.8",
+    "bootstrap": "^4.0.0",
+    "jquery": "^3.3.1"
+  }
+}
