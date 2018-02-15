@@ -1,4 +1,4 @@
-var express = require('express');
+var express = require("express");
 var app = express();
 var uri_root = "http://localhost"
 var port = 3000;
@@ -6,17 +6,26 @@ var port = 3000;
 var bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
-// app.use(express.static(__dirname + '/public'));
-app.use(express.static(__dirname + '/angular_app'));
+app.use(express.static(__dirname + "/angular_app"));
 
 var Product = require("./model/product");
 
-app.get('/api/catalog', function (req, res) {
-  res.json(catalog);
+app.get("/api/catalog", function(req, res) {
+  var stream = Product.find().stream();
+  var results = {};
+  stream.on("data", function(doc) {
+      results[doc.id] = doc;
+    }).on("error", function(err) {
+      res.status(500);
+      next(err);
+    }).on("close", function() {
+      res.status(200);
+      res.json(results);
+  });
 });
 
 // Read
-app.get('/api/catalog/:id', function (req, res, next) {
+app.get("/api/catalog/:id", function (req, res, next) {
   var productId = req.params.id;
 
   Product.findOne({id: productId}, function(err, product) {
