@@ -35,6 +35,9 @@ app.controller("IndexController", ["$scope", "$http", function($scope, $http) {
       data: data
     }).then(function successCallback(response) {
       // Handle success
+      if (!$scope.catalog) {
+        $scope.catalog = [];
+      }
       $scope.catalog.push(data);
     }, function errorCallback(response) {
       // Handle error
@@ -46,12 +49,12 @@ app.controller("IndexController", ["$scope", "$http", function($scope, $http) {
   };
 
   $scope.update_product = function () {
-    delete $scope.current_product.new
-    var data = $scope.current_product
+    delete $scope.current_product.new;
+    var data = $scope.current_product;
 
     $http({
       method: 'PUT',
-      url: API_URL + $scope.current_product.id,
+      url: API_URL + $scope.current_product._id,
       data: data
     }).then(function successCallback(response) {
       // Handle success
